@@ -1,2 +1,15 @@
 @import "tailwindcss";
 @import "@heroui/styles";
+
+@theme {
+  --color-ideavault-deep: #005461;
+  --color-ideavault-teal: #0c7779;
+  --color-ideavault-aqua: #249e94;
+  --color-ideavault-mint: #3bc1a8;
+}
+
+:root {
+  /* Override any color variable */
+  --accent: oklch(0.7 0.25 260);
+  --success: oklch(0.65 0.15 155);
+}
