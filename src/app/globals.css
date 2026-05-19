@@ -13,3 +13,39 @@
   --accent: oklch(0.7 0.25 260);
   --success: oklch(0.65 0.15 155);
 }
+
+@keyframes marquee-flow {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-flow {
+  animation: marquee-flow 25s linear infinite;
+}
+
+/* Swiper custom structural pagination modifications */
+.cleanSwiper .swiper-pagination {
+  bottom: 24px !important;
+  left: 40px !important;
+  text-align: left !important;
+  width: auto !important;
+}
+
+.cleanSwiper .swiper-pagination-bullet {
+  background: #808080 !important;
+  border-radius: 0px !important;
+  width: 24px !important;
+  height: 3px !important;
+  opacity: 0.3;
+  transition: all 0.2s ease;
+}
+
+.cleanSwiper .swiper-pagination-bullet-active {
+  background: #249e94 !important;
+  width: 36px !important;
+  opacity: 1;
+}
