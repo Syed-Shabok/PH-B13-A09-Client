@@ -33,11 +33,35 @@ const slidesData = [
     accentBlockTitle: "Community Driven",
     accentBlockText:
       "Every idea gets real comments, honest feedback, and genuine engagement from people who care about innovation.",
-    bgImage:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80",
+    bgImage: "https://images.unsplash.com/photo-1758876021444-3885d0a2539f",
   },
   {
-    kicker: "02 // DISCOVER & COLLABORATE",
+    kicker: "02 // VALIDATE BEFORE YOU BUILD",
+    titleMain: "Test your startup",
+    titleAccent: "Before Launch.",
+    description:
+      "Get insights from real users before investing months into development. Validate demand, improve your concept, and refine your vision with community-driven feedback.",
+
+    primaryActionText: "See Feedback",
+    primaryActionHref: "/my-ideas",
+
+    metricValue: "17000+",
+    metricLabel: "Comments and feedback shared",
+
+    accentBlockBg:
+      "bg-[#005461]/10 dark:bg-[#005461]/20 text-[#005461] dark:text-[#3BC1A8]",
+
+    accentBlockIcon: <ShieldAlert className="w-8 h-8" />,
+
+    accentBlockTitle: "Real Feedback",
+    accentBlockText:
+      "Receive constructive criticism, feature suggestions, and market insights from entrepreneurs and innovators worldwide.",
+
+    bgImage:
+      "https://plus.unsplash.com/premium_photo-1663047145996-cdb1ef24a17a",
+  },
+  {
+    kicker: "03 // DISCOVER & COLLABORATE",
     titleMain: "Find ideas worth",
     titleAccent: "Building.",
     description:
@@ -53,7 +77,7 @@ const slidesData = [
     accentBlockText:
       "Connect with founders, developers, and creators who share your vision and want to help ideas grow.",
     bgImage:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
   },
 ];
 
@@ -162,7 +186,7 @@ const Banner = () => {
                     </div>
                   </div>
 
-                  {/* Accemt Block */}
+                  {/* Accent Block */}
                   <div
                     className={`p-8 md:p-12 flex items-center gap-6 justify-between border-b border-gray-200 dark:border-gray-800 ${slide.accentBlockBg}`}
                   >
