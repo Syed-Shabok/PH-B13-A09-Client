@@ -14,8 +14,8 @@ const TrendingIdeas = async () => {
   const displayedIdeas = ideas.slice(0, 6);
 
   return (
-    <section className="bg-white dark:bg-gray-950 py-20 px-5 border-b border-gray-200 dark:border-gray-800">
-      <div className="container mx-auto">
+    <section className="bg-white dark:bg-gray-950 py-20 px-5  border-gray-200 dark:border-gray-800">
+      <div className="container mx-auto ">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-6 border-b border-gray-200 dark:border-gray-900 gap-6">
           <div className="space-y-3 text-left">
