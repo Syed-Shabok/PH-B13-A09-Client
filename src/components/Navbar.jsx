@@ -10,7 +10,7 @@ import logo from "../../public/assets/logo.png";
 import logo2 from "../../public/assets/logo2.png";
 import ThemeToggle from "./ThemeToggle";
 
-const NavbarComponent = () => {
+const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const pathname = usePathname();
@@ -234,4 +234,4 @@ const NavbarComponent = () => {
   );
 };
 
-export default NavbarComponent;
+export default Navbar;

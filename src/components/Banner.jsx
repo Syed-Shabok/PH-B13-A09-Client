@@ -94,7 +94,7 @@ const ribbonItems = [
 
 const Banner = () => {
   return (
-    <section className="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-800 relative px-5">
+    <section className="bg-white pt-0 lg:pt-5 xl:pt-15 dark:bg-gray-950 text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-800 relative px-5">
       <div className="container mx-auto px-0">
         <Swiper
           pagination={{ clickable: true }}

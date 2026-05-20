@@ -2,6 +2,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import NextThemeProvider from "@/providers/NextThemeProvider";
+import Footer from "@/components/Footer";
 
 const roboto = Roboto({
   variable: "--font-roboto",
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
         <NextThemeProvider>
           <Navbar />
           {children}
+          <Footer />
         </NextThemeProvider>
       </body>
     </html>
