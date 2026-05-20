@@ -9,24 +9,28 @@ import Image from "next/image";
 import logo from "../../public/assets/logo.png";
 import logo2 from "../../public/assets/logo2.png";
 import ThemeToggle from "./ThemeToggle";
+import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const pathname = usePathname();
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
+  const { data: session } = authClient.useSession();
+
+  const user = session?.user;
+  console.log("Current User:", user);
+
+  const handleLogout = async () => {
+    await authClient.signOut();
+    toast.success("Logged out successfully");
+  };
+
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  const mockUser = {
-    name: "Alex Innovator",
-    email: "alex@ideavault.com",
-    avatar:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
-  };
 
   const publicLinks = [
     { label: "Home", path: "/" },
@@ -39,7 +43,7 @@ const Navbar = () => {
     { label: "My Interactions", path: "/my-interactions" },
   ];
 
-  const allLinks = isLoggedIn ? [...publicLinks, ...privateLinks] : publicLinks;
+  const allLinks = user ? [...publicLinks, ...privateLinks] : publicLinks;
 
   const isActive = (path) => pathname === path;
 
@@ -87,14 +91,14 @@ const Navbar = () => {
             <ThemeToggle />
           </div>
 
-          {isLoggedIn ? (
+          {user ? (
             /* User Dropdown */
             <Dropdown>
               <Dropdown.Trigger>
                 <div className="rounded-full border-2 border-[#249E94] overflow-hidden w-9 h-9 transition-transform hover:scale-105 cursor-pointer">
                   <img
-                    src={mockUser.avatar}
-                    alt={mockUser.name}
+                    src={user?.image}
+                    alt={`${user?.name}'s avatar`}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -110,7 +114,7 @@ const Navbar = () => {
                       <div className="flex flex-col py-1">
                         <p className="text-xs text-gray-400">Signed in as</p>
                         <p className="font-bold text-[#005461] dark:text-[#3BC1A8] text-sm">
-                          {mockUser.email}
+                          {user?.email}
                         </p>
                       </div>
                     </Dropdown.Item>
@@ -125,7 +129,7 @@ const Navbar = () => {
                       id="logout"
                       textValue="Log Out"
                       className="text-red-500"
-                      onAction={() => setIsLoggedIn(false)}
+                      onAction={handleLogout}
                     >
                       Log Out
                     </Dropdown.Item>
@@ -204,7 +208,7 @@ const Navbar = () => {
               </li>
             ))}
 
-            {!isLoggedIn && (
+            {!user && (
               <>
                 <hr className="my-2 border-gray-200 dark:border-gray-700" />
                 <li>

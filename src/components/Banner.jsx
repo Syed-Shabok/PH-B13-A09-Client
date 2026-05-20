@@ -15,6 +15,7 @@ import { Pagination, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
+import Link from "next/link";
 
 const slidesData = [
   {
@@ -127,15 +128,13 @@ const Banner = () => {
                     </p>
 
                     <div className="flex flex-wrap gap-4 pt-4">
-                      <Button
-                        as="a"
-                        href={slide.primaryActionHref}
-                        className="px-8 h-14 bg-gray-950 dark:bg-white text-white dark:text-gray-950 font-bold tracking-tight text-md rounded-none border border-transparent hover:bg-transparent dark:hover:bg-transparent hover:text-gray-950 dark:hover:text-white hover:border-gray-950 dark:hover:border-white transition-all group"
-                      >
-                        {slide.primaryActionText}
+                      <Link href={slide.primaryActionHref}>
+                        <Button className="px-8 h-14 bg-gray-950 dark:bg-white text-white dark:text-gray-950 font-bold tracking-tight text-md rounded-none border border-transparent hover:bg-transparent dark:hover:bg-transparent hover:text-gray-950 dark:hover:text-white hover:border-gray-950 dark:hover:border-white transition-all group">
+                          {slide.primaryActionText}
 
-                        <ArrowUpRight className="w-4 h-4 ml-2 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                      </Button>
+                          <ArrowUpRight className="w-4 h-4 ml-2 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        </Button>
+                      </Link>
                     </div>
                   </div>
 
