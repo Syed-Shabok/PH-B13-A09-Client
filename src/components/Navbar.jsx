@@ -97,6 +97,7 @@ const Navbar = () => {
               <Dropdown.Trigger>
                 <div className="rounded-full border-2 border-[#249E94] overflow-hidden w-9 h-9 transition-transform hover:scale-105 cursor-pointer">
                   <img
+                    referrerPolicy="no-referrer"
                     src={user?.image}
                     alt={`${user?.name}'s avatar`}
                     className="w-full h-full object-cover"

@@ -164,7 +164,7 @@ const RegisterPage = () => {
           </Button>
         </Form>
 
-        {/* BRUTALIST SEPARATOR TRACK */}
+        {/* SEPARATOR  */}
         <div className="flex justify-center items-center gap-3 my-6 w-full">
           <Separator className="flex-1 bg-[var(--card-border)]/40" />
           <div className="whitespace-nowrap font-mono text-[9px] font-bold text-[var(--card-text-muted)] uppercase tracking-widest">
@@ -173,7 +173,7 @@ const RegisterPage = () => {
           <Separator className="flex-1 bg-[var(--card-border)]/40" />
         </div>
 
-        {/* Social Authentication Row */}
+        {/* Social Authentication */}
         <Button
           onClick={handleGoogleSignin}
           variant="bordered"
