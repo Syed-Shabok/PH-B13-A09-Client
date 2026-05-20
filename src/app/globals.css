@@ -9,9 +9,22 @@
 }
 
 :root {
-  /* Override any color variable */
   --accent: oklch(0.7 0.25 260);
   --success: oklch(0.65 0.15 155);
+
+  --card-bg: #ffffff;
+  --card-bg-subtle: #f9fafb;
+  --card-border: #e5e7eb;
+  --card-text: #111827;
+  --card-text-muted: #6b7280;
+}
+
+.dark {
+  --card-bg: #030712;
+  --card-bg-subtle: #111827;
+  --card-border: #1f2937;
+  --card-text: #ffffff;
+  --card-text-muted: #9ca3af;
 }
 
 @keyframes marquee-flow {

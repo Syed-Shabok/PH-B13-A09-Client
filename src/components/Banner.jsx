@@ -37,7 +37,7 @@ const slidesData = [
   },
   {
     kicker: "02 // VALIDATE BEFORE YOU BUILD",
-    titleMain: "Test your startup",
+    titleMain: "Get Feedback",
     titleAccent: "Before Launch.",
     description:
       "Get insights from real users before investing months into development. Validate demand, improve your concept, and refine your vision with community-driven feedback.",

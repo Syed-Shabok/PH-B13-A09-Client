@@ -47,7 +47,7 @@ const NavbarComponent = () => {
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg">
-      <header className="mx-auto flex h-16 container items-center justify-between px-6">
+      <header className="mx-auto flex h-18 container items-center justify-between px-5 lg:px-0">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <div className="w-[150px] h-10 relative flex items-center">
