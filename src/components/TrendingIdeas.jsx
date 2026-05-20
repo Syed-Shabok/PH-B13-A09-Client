@@ -1,17 +1,8 @@
+import { fetchTrendingIdeas } from "@/lib/ideas/data";
 import IdeaCard from "./IdeaCard";
 
 const TrendingIdeas = async () => {
-  const res = await fetch("http://localhost:5000/ideas", {
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch ideas");
-  }
-
-  const ideas = await res.json();
-
-  const displayedIdeas = ideas.slice(0, 6);
+  const ideas = await fetchTrendingIdeas();
 
   return (
     <section className="bg-white dark:bg-gray-950 py-20 px-5  border-gray-200 dark:border-gray-800">
@@ -39,8 +30,13 @@ const TrendingIdeas = async () => {
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-          {displayedIdeas.map((idea) => (
-            <IdeaCard key={idea._id || idea.id} idea={idea} />
+          {ideas.map((idea) => (
+            <div
+              key={idea._id}
+              className="transition-transform duration-200 hover:-translate-y-1"
+            >
+              <IdeaCard idea={idea} />
+            </div>
           ))}
         </div>
       </div>
