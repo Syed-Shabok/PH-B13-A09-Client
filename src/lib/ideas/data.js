@@ -29,3 +29,19 @@ export const fetchAllIdeas = async () => {
     throw error;
   }
 };
+
+export const fetchIdeaById = async (id) => {
+  try {
+    const res = await fetch(`http://localhost:5000/ideas/${id}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      throw new Error("Failed to fetch idea");
+    }
+    const idea = await res.json();
+    return idea;
+  } catch (error) {
+    console.error("Error fetching idea by ID:", error);
+    throw error;
+  }
+};
