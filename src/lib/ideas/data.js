@@ -45,3 +45,34 @@ export const fetchIdeaById = async (id) => {
     throw error;
   }
 };
+
+export const fetchIdeasByUser = async (email) => {
+  try {
+    const res = await fetch(`http://localhost:5000/ideas/user/${email}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) throw new Error("Failed to fetch user ideas");
+    return await res.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const deleteIdea = async (id) => {
+  const res = await fetch(`http://localhost:5000/ideas/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) throw new Error("Failed to delete idea");
+  return await res.json();
+};
+
+export const updateIdea = async (id, updatedData) => {
+  const res = await fetch(`http://localhost:5000/ideas/${id}`, {
+    method: "PATCH",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(updatedData),
+  });
+  if (!res.ok) throw new Error("Failed to update idea");
+  return await res.json();
+};
