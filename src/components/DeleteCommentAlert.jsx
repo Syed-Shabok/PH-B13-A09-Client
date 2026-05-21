@@ -13,7 +13,7 @@ export function DeleteCommentAlert({ commentId }) {
   const handleDeleteComment = async () => {
     setLoading(true);
     try {
-      await deleteCommentAction(commentId); // no token needed
+      await deleteCommentAction(commentId);
       toast.success("Comment deleted");
       setOpen(false);
       router.refresh();

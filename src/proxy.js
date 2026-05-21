@@ -1,17 +1,23 @@
 import { NextResponse } from "next/server";
-import { auth } from "./lib/auth";
-import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 
 export async function proxy(request) {
   const session = await auth.api.getSession({
-    headers: await headers(),
+    headers: request.headers,
   });
 
   const { pathname } = request.nextUrl;
 
-  const isAuthPage = pathname === "/login" || pathname === "/register";
+  const isAuthPage =
+    pathname.startsWith("/login") || pathname.startsWith("/register");
 
-  const isProtected = !isAuthPage;
+  // Protected routes
+  const isProtected =
+    pathname.startsWith("/add-idea") ||
+    pathname.startsWith("/my-ideas") ||
+    pathname.startsWith("/my-interactions") ||
+    pathname.startsWith("/profile-management") ||
+    pathname.startsWith("/ideas/");
 
   if (session && isAuthPage) {
     return NextResponse.redirect(new URL("/", request.url));
@@ -19,7 +25,9 @@ export async function proxy(request) {
 
   if (!session && isProtected) {
     const loginUrl = new URL("/login", request.url);
-    loginUrl.searchParams.set("callbackUrl", pathname);
+
+    loginUrl.searchParams.set("callbackUrl", request.nextUrl.pathname);
+
     return NextResponse.redirect(loginUrl);
   }
 
@@ -30,10 +38,10 @@ export const config = {
   matcher: [
     "/login",
     "/register",
-    "/my-ideas",
-    "/add-idea",
-    "/my-interactions",
-    "/profile-management",
+    "/add-idea/:path*",
+    "/my-ideas/:path*",
+    "/my-interactions/:path*",
+    "/profile-management/:path*",
     "/ideas/:path*",
   ],
 };

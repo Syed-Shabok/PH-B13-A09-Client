@@ -3,6 +3,10 @@ import { fetchAllIdeas } from "@/lib/ideas/data";
 import { Lightbulb, Database, Layers } from "lucide-react";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Ideas | IdeaVault",
+};
+
 const IdeasPage = async () => {
   const ideas = await fetchAllIdeas();
 

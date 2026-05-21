@@ -5,6 +5,10 @@ import TrendingIdeas from "@/components/TrendingIdeas";
 import { Button } from "@heroui/react";
 import Image from "next/image";
 
+export const metadata = {
+  title: "Home | IdeaVault",
+};
+
 export default function Home() {
   return (
     <div>

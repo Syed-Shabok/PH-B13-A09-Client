@@ -100,7 +100,7 @@ export default function CreateIdeaForm() {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/ideas", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(newIdea),

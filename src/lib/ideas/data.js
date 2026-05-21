@@ -1,6 +1,6 @@
 export const fetchTrendingIdeas = async () => {
   try {
-    const res = await fetch("http://localhost:5000/ideas", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas`, {
       cache: "no-store",
     });
     if (!res.ok) {
@@ -16,7 +16,7 @@ export const fetchTrendingIdeas = async () => {
 
 export const fetchAllIdeas = async () => {
   try {
-    const res = await fetch("http://localhost:5000/ideas", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas`, {
       cache: "no-store",
     });
     if (!res.ok) {
@@ -32,10 +32,13 @@ export const fetchAllIdeas = async () => {
 
 export const fetchIdeaById = async (id, token) => {
   try {
-    const res = await fetch(`http://localhost:5000/ideas/${id}`, {
-      cache: "no-store",
-      headers: { authorization: `Bearer ${token}` },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${id}`,
+      {
+        cache: "no-store",
+        headers: { authorization: `Bearer ${token}` },
+      },
+    );
     if (!res.ok) {
       throw new Error("Failed to fetch idea");
     }
@@ -49,9 +52,12 @@ export const fetchIdeaById = async (id, token) => {
 
 export const fetchIdeasByUser = async (email) => {
   try {
-    const res = await fetch(`http://localhost:5000/ideas/user/${email}`, {
-      cache: "no-store",
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/user/${email}`,
+      {
+        cache: "no-store",
+      },
+    );
     if (!res.ok) throw new Error("Failed to fetch user ideas");
     return await res.json();
   } catch (error) {
@@ -61,7 +67,7 @@ export const fetchIdeasByUser = async (email) => {
 };
 
 export const deleteIdea = async (id) => {
-  const res = await fetch(`http://localhost:5000/ideas/${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${id}`, {
     method: "DELETE",
   });
   if (!res.ok) throw new Error("Failed to delete idea");
@@ -69,7 +75,7 @@ export const deleteIdea = async (id) => {
 };
 
 export const updateIdea = async (id, updatedData) => {
-  const res = await fetch(`http://localhost:5000/ideas/${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${id}`, {
     method: "PATCH",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(updatedData),
@@ -80,9 +86,12 @@ export const updateIdea = async (id, updatedData) => {
 
 export const fetchCommentsByUser = async (userId) => {
   try {
-    const res = await fetch(`http://localhost:5000/comment/user/${userId}`, {
-      cache: "no-store",
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/comment/user/${userId}`,
+      {
+        cache: "no-store",
+      },
+    );
     if (!res.ok) throw new Error("Failed to fetch user comments");
     return await res.json();
   } catch (error) {

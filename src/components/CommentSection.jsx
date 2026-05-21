@@ -15,9 +15,12 @@ const CommentSection = async ({ idea }) => {
   const user = session?.user;
   const { token } = await auth.api.getToken({ headers: await headers() });
 
-  const res = await fetch(`http://localhost:5000/comment/${idea?._id}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/comment/${idea?._id}`,
+    {
+      cache: "no-store",
+    },
+  );
 
   const comments = await res.json();
 
@@ -45,7 +48,7 @@ const CommentSection = async ({ idea }) => {
       commentTime: new Date().toISOString(),
     };
 
-    await fetch("http://localhost:5000/comment", {
+    await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/comment`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

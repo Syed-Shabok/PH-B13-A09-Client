@@ -19,7 +19,7 @@ export default function CommentActions({ comment, isOwner }) {
     if (!text || !text.trim()) return;
     setLoading(true);
     try {
-      await updateCommentAction(comment._id, text); // no token needed
+      await updateCommentAction(comment._id, text);
       toast.success("Comment updated");
       setIsEditing(false);
       router.refresh();

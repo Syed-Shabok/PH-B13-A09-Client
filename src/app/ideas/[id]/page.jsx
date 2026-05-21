@@ -6,6 +6,43 @@ import Image from "next/image";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+
+  try {
+    const { token } = await auth.api.getToken({
+      headers: await headers(),
+    });
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${id}`,
+      {
+        cache: "no-store",
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    if (!res.ok) {
+      return {
+        title: "Idea Details | IdeaVault",
+      };
+    }
+
+    const idea = await res.json();
+
+    return {
+      title: `${idea.title} | IdeaVault`,
+      description: idea.shortDescription,
+    };
+  } catch (error) {
+    return {
+      title: "Idea Details | IdeaVault",
+    };
+  }
+}
+
 import {
   Terminal,
   ArrowLeft,
