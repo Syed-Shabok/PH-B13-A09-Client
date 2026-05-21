@@ -11,6 +11,7 @@ import logo2 from "../../public/assets/logo2.png";
 import ThemeToggle from "./ThemeToggle";
 import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,8 +23,16 @@ const Navbar = () => {
 
   const user = session?.user;
 
+  const router = useRouter();
+
   const handleLogout = async () => {
-    await authClient.signOut();
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/login");
+        },
+      },
+    });
     toast.success("Logged out successfully");
   };
 

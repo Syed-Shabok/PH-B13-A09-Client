@@ -13,6 +13,7 @@ const CommentSection = async ({ idea }) => {
   });
 
   const user = session?.user;
+  const { token } = await auth.api.getToken({ headers: await headers() });
 
   const res = await fetch(`http://localhost:5000/comment/${idea?._id}`, {
     cache: "no-store",
@@ -26,11 +27,11 @@ const CommentSection = async ({ idea }) => {
     const session = await auth.api.getSession({
       headers: await headers(),
     });
-
     const user = session?.user;
 
-    const text = formData.get("commentText");
+    const { token } = await auth.api.getToken({ headers: await headers() });
 
+    const text = formData.get("commentText");
     if (!text || !text.trim()) return;
 
     const newComment = {
@@ -48,6 +49,7 @@ const CommentSection = async ({ idea }) => {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(newComment),
     });

@@ -5,7 +5,7 @@ import { Button, Input } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { Edit2, X, Check } from "lucide-react";
 import { DeleteCommentAlert } from "./DeleteCommentAlert";
-import { updateComment } from "@/lib/ideas/data";
+import { updateCommentAction } from "@/lib/actions/commentActions";
 import toast from "react-hot-toast";
 
 export default function CommentActions({ comment, isOwner }) {
@@ -19,7 +19,7 @@ export default function CommentActions({ comment, isOwner }) {
     if (!text || !text.trim()) return;
     setLoading(true);
     try {
-      await updateComment(comment._id, text);
+      await updateCommentAction(comment._id, text); // no token needed
       toast.success("Comment updated");
       setIsEditing(false);
       router.refresh();

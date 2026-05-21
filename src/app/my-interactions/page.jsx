@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import { fetchCommentsByUser } from "@/lib/ideas/data";
 import {
-  fetchCommentsByUser,
-  deleteComment,
-  updateComment,
-} from "@/lib/ideas/data";
+  deleteCommentAction,
+  updateCommentAction,
+} from "@/lib/actions/commentActions";
 import { Input, Button } from "@heroui/react";
 import Link from "next/link";
 import { format } from "date-fns";
@@ -120,7 +120,7 @@ function CommentRow({ comment, onDeleted, onUpdated }) {
     if (!text.trim()) return;
     setEditLoading(true);
     try {
-      await updateComment(comment._id, text);
+      await updateCommentAction(comment._id, text);
       toast.success("Comment updated");
       onUpdated(comment._id, text);
       setIsEditing(false);
@@ -134,7 +134,7 @@ function CommentRow({ comment, onDeleted, onUpdated }) {
   const handleDelete = async () => {
     setDeleteLoading(true);
     try {
-      await deleteComment(comment._id);
+      await deleteCommentAction(comment._id);
       toast.success("Comment deleted");
       onDeleted(comment._id);
       setDeleteOpen(false);

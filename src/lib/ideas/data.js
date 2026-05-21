@@ -30,10 +30,11 @@ export const fetchAllIdeas = async () => {
   }
 };
 
-export const fetchIdeaById = async (id) => {
+export const fetchIdeaById = async (id, token) => {
   try {
     const res = await fetch(`http://localhost:5000/ideas/${id}`, {
       cache: "no-store",
+      headers: { authorization: `Bearer ${token}` },
     });
     if (!res.ok) {
       throw new Error("Failed to fetch idea");
@@ -88,23 +89,4 @@ export const fetchCommentsByUser = async (userId) => {
     console.error(error);
     throw error;
   }
-};
-
-export const deleteComment = async (id) => {
-  const res = await fetch(`http://localhost:5000/comment/${id}`, {
-    method: "DELETE",
-    headers: { "content-type": "application/json" },
-  });
-  if (!res.ok) throw new Error("Failed to delete comment");
-  return await res.json();
-};
-
-export const updateComment = async (id, text) => {
-  const res = await fetch(`http://localhost:5000/comment/${id}`, {
-    method: "PATCH",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({ text }),
-  });
-  if (!res.ok) throw new Error("Failed to update comment");
-  return await res.json();
 };

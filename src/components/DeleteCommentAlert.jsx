@@ -1,10 +1,9 @@
-"use client";
-
 import { Terminal, AlertTriangle, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { deleteComment } from "@/lib/ideas/data";
 import toast from "react-hot-toast";
+
+import { deleteCommentAction } from "@/lib/actions/commentActions";
 
 export function DeleteCommentAlert({ commentId }) {
   const [open, setOpen] = useState(false);
@@ -14,7 +13,7 @@ export function DeleteCommentAlert({ commentId }) {
   const handleDeleteComment = async () => {
     setLoading(true);
     try {
-      await deleteComment(commentId);
+      await deleteCommentAction(commentId); // no token needed
       toast.success("Comment deleted");
       setOpen(false);
       router.refresh();

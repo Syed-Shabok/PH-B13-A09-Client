@@ -3,6 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { fetchIdeaById } from "@/lib/ideas/data";
 import Image from "next/image";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 
 import {
   Terminal,
@@ -14,14 +16,18 @@ import {
   ThumbsUp,
   MessageSquare,
   Lightbulb,
+  DollarSign,
 } from "lucide-react";
-import { Button } from "@heroui/react";
 import CommentSection from "@/components/CommentSection";
 
 const IdeaDetailsPage = async ({ params }) => {
   const { id } = await params;
 
-  const idea = await fetchIdeaById(id);
+  const { token } = await auth.api.getToken({ headers: await headers() });
+
+  // console.log(token);
+
+  const idea = await fetchIdeaById(id, token);
 
   if (!idea) {
     notFound();
@@ -61,12 +67,12 @@ const IdeaDetailsPage = async ({ params }) => {
       </div>
 
       {/* MAIN GRID */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 lg:items-stretch gap-8">
         {/* LEFT SIDE */}
-        <div className="lg:col-span-8">
-          <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg)] overflow-hidden">
+        <div className="lg:col-span-8 flex flex-col">
+          <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg)] overflow-hidden h-full flex flex-col">
             {/* IMAGE */}
-            <div className="relative h-80 w-full border-b border-[var(--card-border)]">
+            <div className="relative h-80 xl:h-100 w-full border-b border-[var(--card-border)] shrink-0">
               {idea.imageUrl ? (
                 <Image
                   src={idea.imageUrl}
@@ -94,7 +100,7 @@ const IdeaDetailsPage = async ({ params }) => {
             </div>
 
             {/* CONTENT */}
-            <div className="p-6 md:p-8 space-y-6">
+            <div className="p-6 md:p-8 space-y-6 flex-1">
               <h1 className="text-3xl md:text-4xl font-black uppercase leading-tight text-[var(--card-text)] font-mono">
                 {idea.title}
               </h1>
@@ -106,7 +112,7 @@ const IdeaDetailsPage = async ({ params }) => {
             </div>
 
             {/* STATS */}
-            <div className="font-mono border-t border-[var(--card-border)] p-5 bg-[var(--card-bg-subtle)] flex flex-wrap items-center justify-between gap-4 text-base text-[var(--card-text-muted)]">
+            <div className="font-mono border-t border-[var(--card-border)] p-5 bg-[var(--card-bg-subtle)] flex flex-wrap items-center justify-between gap-4 text-base text-[var(--card-text-muted)] shrink-0">
               <div className="flex items-center gap-6">
                 <div className="flex items-center gap-2">
                   <ThumbsUp className="w-4 h-4 text-[#249E94]" />
@@ -128,54 +134,67 @@ const IdeaDetailsPage = async ({ params }) => {
 
         {/* RIGHT SIDE */}
         <div className="lg:col-span-4 flex flex-col gap-6">
-          <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-6 space-y-6 flex-1">
-            <h2 className="text-xl font-bold uppercase border-b border-[var(--card-border)] pb-3 font-mono">
-              Metadata
-            </h2>
+          <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-6 space-y-6 h-full flex flex-col justify-between">
+            <div className="space-y-6 flex-1 flex flex-col">
+              <h2 className="text-xl font-bold uppercase border-b border-[var(--card-border)] pb-3 font-mono">
+                Metadata
+              </h2>
 
-            {/* TAGS */}
-            {idea.tags?.length > 0 && (
-              <div className="font-mono">
-                <h3 className="text-base font-bold uppercase mb-3 text-[var(--card-text-muted)]">
-                  Tags
+              {/* ESTIMATED COST INSERTION */}
+              <div className="font-mono bg-[var(--card-bg)] p-4 border border-[var(--card-border)] flex items-center justify-between">
+                <div className="flex items-center gap-2 text-base font-bold uppercase text-[var(--card-text-muted)]">
+                  <DollarSign className="w-4 h-4 text-[#249E94]" />
+                  <span>Est. Budget</span>
+                </div>
+                <span className="text-sm font-bold font-mono px-3 py-1.5 bg-[#249E94]/10 text-[#249E94] border border-[#249E94]/20 uppercase tracking-wider">
+                  {idea.estimatedBudget || "TBD"}
+                </span>
+              </div>
+
+              {/* TAGS */}
+              {idea.tags?.length > 0 && (
+                <div className="font-mono">
+                  <h3 className="text-base font-bold uppercase mb-3 text-[var(--card-text-muted)]">
+                    Tags
+                  </h3>
+
+                  <div className="flex flex-wrap gap-2">
+                    {idea.tags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="text-sm border border-[var(--card-border)] bg-[var(--card-bg)] px-3 py-1 uppercase"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* DETAILS */}
+              <div className="flex-1 flex flex-col">
+                <h3 className="text-base font-bold uppercase mb-3 text-[var(--card-text-muted)] font-mono">
+                  Detailed Description
                 </h3>
 
-                <div className="flex flex-wrap gap-2">
-                  {idea.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="text-sm border border-[var(--card-border)] bg-[var(--card-bg)] px-3 py-1 uppercase"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+                <p className="text-justify leading-relaxed text-[var(--card-text)] bg-[var(--card-bg)] p-4 border border-[var(--card-border)] whitespace-pre-wrap text-sm md:text-base flex-1">
+                  {idea.detailedDescription ||
+                    "No detailed description available."}
+                </p>
               </div>
-            )}
-
-            {/* DETAILS */}
-            <div className="flex-1">
-              <h3 className="text-base font-bold uppercase mb-3 text-[var(--card-text-muted)] font-mono">
-                Detailed Description
-              </h3>
-
-              <p className="text-justify leading-relaxed text-[var(--card-text)] bg-[var(--card-bg)] p-4 border border-[var(--card-border)] whitespace-pre-wrap text-sm md:text-base">
-                {idea.detailedDescription ||
-                  "No detailed description available."}
-              </p>
             </div>
 
-            {/* BUTTONS */}
-            <div className="space-y-3 pt-4">
-              <Button className="flex items-center justify-center gap-2 bg-[#249E94] text-black w-full py-7 text-base font-bold uppercase hover:bg-[#0C7779] hover:text-white transition font-mono rounded-none">
+            {/* BUTTONS - Replaced HeroUI Button with Clean HTML Native Tag */}
+            <div className="space-y-3 pt-4 shrink-0">
+              <button className="flex items-center justify-center gap-2 bg-[#249E94] text-black w-full py-4 text-base font-bold uppercase hover:bg-[#0C7779] hover:text-white transition font-mono rounded-none cursor-pointer border border-[#249E94]">
                 <ShieldCheck className="w-4 h-4" />
                 Contact Creator
-              </Button>
+              </button>
             </div>
           </div>
 
           {/* NOTICE */}
-          <div className="font-mono border border-dashed border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-5 flex gap-3">
+          <div className="font-mono border border-dashed border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-5 flex gap-3 shrink-0">
             <Terminal className="w-5 h-5 text-[#249E94] shrink-0 mt-1" />
 
             <p className="text-sm md:text-base leading-relaxed text-[var(--card-text-muted)]">
