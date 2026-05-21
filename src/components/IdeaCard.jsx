@@ -54,7 +54,7 @@ const IdeaCard = ({ idea }) => {
           </h3>
 
           {/* DESCRIPTION */}
-          <p className="text-sm text-[var(--card-text-muted)] line-clamp-3 leading-relaxed">
+          <p className="text-sm text-[var(--card-text-muted)] line-clamp-2 leading-relaxed overflow-hidden">
             {shortDescription}
           </p>
         </div>
