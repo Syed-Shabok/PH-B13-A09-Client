@@ -18,10 +18,9 @@ const Navbar = () => {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  const { data: session } = authClient.useSession();
+  const { data: session, isPending } = authClient.useSession();
 
   const user = session?.user;
-  // console.log("Current User:", user);
 
   const handleLogout = async () => {
     await authClient.signOut();
@@ -51,7 +50,7 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg">
-      <header className="mx-auto flex h-18 container items-center justify-between px-5 lg:px-0">
+      <header className="mx-auto flex h-18 container items-center justify-between px-5 xl:px-0">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <div className="w-[150px] h-10 relative flex items-center">
@@ -66,13 +65,13 @@ const Navbar = () => {
           </div>
         </Link>
 
-        {/* Links in Deskstop */}
+        {/* Desktop Links */}
         <ul className="hidden md:flex items-center gap-6">
           {allLinks.map((link) => (
             <li key={link.path}>
               <Link
                 href={link.path}
-                className={` font-medium transition-colors duration-200 ${
+                className={`font-medium transition-colors duration-200 ${
                   isActive(link.path)
                     ? "text-[#249E94] font-semibold"
                     : "text-gray-600 dark:text-gray-300 hover:text-[#0C7779] dark:hover:text-[#3BC1A8]"
@@ -86,25 +85,35 @@ const Navbar = () => {
 
         {/* Right Side */}
         <div className="flex items-center gap-3">
-          {/* Theme Toggle btn */}
-          <div>
-            <ThemeToggle />
-          </div>
+          <ThemeToggle />
 
-          {user ? (
+          {/* Auth Area */}
+          {isPending ? (
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse" />
+            </div>
+          ) : user ? (
             /* User Dropdown */
             <Dropdown>
               <Dropdown.Trigger>
-                <div className="rounded-full border-2 border-[#249E94] overflow-hidden w-9 h-9 transition-transform hover:scale-105 cursor-pointer">
-                  <img
-                    referrerPolicy="no-referrer"
-                    src={user?.image}
-                    alt={`${user?.name}'s avatar`}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="rounded-full border-2 border-[#249E94] overflow-hidden w-9 h-9 transition-transform hover:scale-105 cursor-pointer bg-[#249E94] flex items-center justify-center">
+                  {user?.image ? (
+                    <Image
+                      referrerPolicy="no-referrer"
+                      src={user.image}
+                      alt={`${user?.name}'s avatar`}
+                      width={100}
+                      height={100}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-black font-bold text-sm uppercase">
+                      {user?.name?.charAt(0) || "U"}
+                    </span>
+                  )}
                 </div>
               </Dropdown.Trigger>
-              <Dropdown.Popover className={"rounded-lg"}>
+              <Dropdown.Popover className="rounded-lg">
                 <Dropdown.Menu>
                   <Dropdown.Section>
                     <Dropdown.Item
@@ -139,7 +148,7 @@ const Navbar = () => {
               </Dropdown.Popover>
             </Dropdown>
           ) : (
-            /* Login and Register */
+            /* Login / Register */
             <div className="hidden md:flex items-center gap-2">
               <Link
                 href="/login"
@@ -156,7 +165,7 @@ const Navbar = () => {
             </div>
           )}
 
-          {/* Mobile Hamburger Menu */}
+          {/* Mobile Hamburger */}
           <button
             className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 dark:text-gray-300"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -198,7 +207,7 @@ const Navbar = () => {
                 <Link
                   href={link.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`block text-sm  py-2 px-3 rounded-lg transition-colors ${
+                  className={`block text-sm py-2 px-3 rounded-lg transition-colors ${
                     isActive(link.path)
                       ? "text-[#249E94] font-bold bg-[#249E94]/10"
                       : "text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"

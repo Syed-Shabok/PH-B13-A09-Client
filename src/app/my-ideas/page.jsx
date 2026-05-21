@@ -48,7 +48,7 @@ export default function MyIdeasPage() {
   }
 
   return (
-    <div className="container mx-auto px-5 py-16">
+    <div className="container mx-auto px-5 py-16 min-h-[85vh]">
       {/* Page Header */}
       <div className="border-b border-[var(--card-border)] pb-8 mb-10">
         <span className="text-[10px] text-[#249E94] font-bold uppercase tracking-widest font-mono">

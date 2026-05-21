@@ -220,7 +220,6 @@ function CommentRow({ comment, onDeleted, onUpdated }) {
         </div>
 
         {/* Actions */}
-        {/* Actions */}
         {!isEditing && (
           <div className="flex items-center gap-2 px-5 py-3 border-t border-[var(--card-border)]/40">
             <Link
