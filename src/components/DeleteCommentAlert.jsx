@@ -1,9 +1,8 @@
 "use client";
 
 import { AlertDialog, Button } from "@heroui/react";
-import { Terminal, AlertTriangle } from "lucide-react";
+import { Terminal, AlertTriangle, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { GoTrash } from "react-icons/go";
 
 export function DeleteCommentAlert({ commentId }) {
   const router = useRouter();
@@ -24,13 +23,9 @@ export function DeleteCommentAlert({ commentId }) {
 
   return (
     <AlertDialog>
-      <Button
-        variant="outline"
-        className={
-          "h-9 w-9 rounded-none text-red-500 border-red-300 hover:bg-red-100 dark:text-red-300 dark:border-red-300 dark:hover:bg-red-200 dark:hover:text-red-500"
-        }
-      >
-        <GoTrash />
+      <Button className="inline-flex h-auto min-w-0 items-center gap-2 bg-transparent p-0 px-2 py-0.5 text-sm font-mono uppercase tracking-wider text-red-500/80 border border-transparent hover:border-red-500/20 hover:bg-red-500/5 hover:text-red-500 rounded-none transition-all">
+        <Trash2 className="w-3.5 h-3.5" />
+        Delete_Comment
       </Button>
       <AlertDialog.Backdrop>
         <AlertDialog.Container>

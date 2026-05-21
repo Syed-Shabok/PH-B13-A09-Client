@@ -4,7 +4,8 @@ import { MessageSquare, Send, User, Calendar, Terminal } from "lucide-react";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
-import { DeleteCommentAlert } from "./DeleteCommentAlert";
+
+import CommentActions from "./CommentActions";
 
 const CommentSection = async ({ idea }) => {
   const session = await auth.api.getSession({
@@ -76,7 +77,6 @@ const CommentSection = async ({ idea }) => {
         <div className="w-full flex flex-col gap-1.5 font-mono">
           <label className="text-sm font-bold uppercase text-[var(--card-text-muted)] flex items-center justify-between">
             <span>Share your thoughts</span>
-
             <span className="text-xs opacity-40">TXT_INPUT</span>
           </label>
 
@@ -85,7 +85,7 @@ const CommentSection = async ({ idea }) => {
               name="commentText"
               required
               placeholder="Write your Comment here"
-              className="rounded-none border-[var(--card-border)] hover:border-[#249E94]/60 focus:border-[#249E94] transition-colors flex-1 border"
+              className="flex-1 border-[var(--card-border)] hover:border-[#249E94]/60 focus:border-[#249E94] transition-colors text-sm text-[var(--card-text)]"
             />
 
             <Button
@@ -99,7 +99,7 @@ const CommentSection = async ({ idea }) => {
         </div>
       </Form>
 
-      {/* COMMENTS FEED */}
+      {/* COMMENTS CONTAINER */}
       <div className="space-y-4 font-mono">
         {comments.length === 0 ? (
           <div className="border border-dashed border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-6 text-center text-base text-[var(--card-text-muted)] flex items-center justify-center gap-2">
@@ -107,56 +107,50 @@ const CommentSection = async ({ idea }) => {
             No comments found. Thread is currently empty.
           </div>
         ) : (
-          comments.map((comment) => (
-            <div
-              key={comment._id}
-              className="border border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-4 flex flex-col gap-2 relative group hover:border-[#249E94]/30 transition-all duration-300"
-            >
-              {/* META INFO */}
-              <div className="flex items-center justify-between text-xs text-[var(--card-text-muted)] border-b border-[var(--card-border)]/40 pb-2">
-                <div className="flex items-center gap-1.5 font-bold">
-                  <User className="w-3.5 h-3.5 text-[#0C7779]" />
+          comments.map((comment) => {
+            const isOwner = comment?.userId === user?.id;
 
-                  <span className="text-[var(--card-text)]">
-                    {comment?.userId === user?.id
-                      ? "You"
-                      : comment?.userName || "Anonymous"}
-                  </span>
+            return (
+              <div
+                key={comment._id}
+                className="border border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-4 flex flex-col gap-2 relative group hover:border-[#249E94]/30 transition-all duration-300"
+              >
+                {/* META INFO */}
+                <div className="flex items-center justify-between text-xs text-[var(--card-text-muted)] border-b border-[var(--card-border)]/40 pb-2">
+                  <div className="flex items-center gap-1.5 font-bold">
+                    <User className="w-3.5 h-3.5 text-[#0C7779]" />
+                    <span className="text-[var(--card-text)]">
+                      {isOwner ? "You" : comment?.userName || "Anonymous"}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 opacity-80">
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>
+                      {new Date(comment?.commentTime).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        },
+                      )}
+                    </span>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-1.5 opacity-80">
-                  <Calendar className="w-3.5 h-3.5" />
+                {/* CONTENT AREA */}
+                <div>
+                  <CommentActions comment={comment} isOwner={isOwner} />
+                </div>
 
-                  <span>
-                    {new Date(comment?.commentTime).toLocaleDateString(
-                      "en-US",
-                      {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      },
-                    )}
-                  </span>
+                {/* TERMINAL ACCENT */}
+                <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className="w-1.5 h-1.5 bg-[#249E94] block" />
                 </div>
               </div>
-
-              {/* MAIN CONTENT */}
-              <div className="flex flex-wrap justify-between items-center gap-3">
-                <p className="text-sm md:text-base text-[var(--card-text)] leading-relaxed whitespace-pre-wrap pl-1 pt-1">
-                  {comment?.text}
-                </p>
-
-                {comment?.userId === user?.id && (
-                  <DeleteCommentAlert commentId={comment?._id} />
-                )}
-              </div>
-
-              {/* DECORATIVE TERMINAL ACCENT */}
-              <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="w-1.5 h-1.5 bg-[#249E94] block" />
-              </div>
-            </div>
-          ))
+            );
+          })
         )}
       </div>
     </div>
