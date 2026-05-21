@@ -76,3 +76,35 @@ export const updateIdea = async (id, updatedData) => {
   if (!res.ok) throw new Error("Failed to update idea");
   return await res.json();
 };
+
+export const fetchCommentsByUser = async (userId) => {
+  try {
+    const res = await fetch(`http://localhost:5000/comment/user/${userId}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) throw new Error("Failed to fetch user comments");
+    return await res.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const deleteComment = async (id) => {
+  const res = await fetch(`http://localhost:5000/comment/${id}`, {
+    method: "DELETE",
+    headers: { "content-type": "application/json" },
+  });
+  if (!res.ok) throw new Error("Failed to delete comment");
+  return await res.json();
+};
+
+export const updateComment = async (id, text) => {
+  const res = await fetch(`http://localhost:5000/comment/${id}`, {
+    method: "PATCH",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ text }),
+  });
+  if (!res.ok) throw new Error("Failed to update comment");
+  return await res.json();
+};

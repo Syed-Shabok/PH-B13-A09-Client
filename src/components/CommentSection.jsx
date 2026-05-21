@@ -85,7 +85,7 @@ const CommentSection = async ({ idea }) => {
               name="commentText"
               required
               placeholder="Write your Comment here"
-              className="flex-1 border-[var(--card-border)] hover:border-[#249E94]/60 focus:border-[#249E94] transition-colors text-sm text-[var(--card-text)]"
+              className="flex-1 border-[var(--card-border)] hover:border-[#249E94]/60 focus:border-[#249E94] transition-colors text-sm text-[var(--card-text)] rounded-none"
             />
 
             <Button

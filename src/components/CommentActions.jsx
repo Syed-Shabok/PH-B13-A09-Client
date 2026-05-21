@@ -5,26 +5,29 @@ import { Button, Input } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { Edit2, X, Check } from "lucide-react";
 import { DeleteCommentAlert } from "./DeleteCommentAlert";
+import { updateComment } from "@/lib/ideas/data";
+import toast from "react-hot-toast";
 
 export default function CommentActions({ comment, isOwner }) {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(comment.text);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
 
   const handleUpdate = async () => {
     if (!text || !text.trim()) return;
-
-    await fetch(`http://localhost:5000/comment/${comment._id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text }),
-    });
-
-    setIsEditing(false);
-    router.refresh();
+    setLoading(true);
+    try {
+      await updateComment(comment._id, text);
+      toast.success("Comment updated");
+      setIsEditing(false);
+      router.refresh();
+    } catch {
+      toast.error("Failed to update comment");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -38,7 +41,7 @@ export default function CommentActions({ comment, isOwner }) {
 
           {/* ACTIONS */}
           {isOwner && (
-            <div className="flex items-center gap-2 pl-1 flex-wrap ">
+            <div className="flex items-center gap-2 pl-1 flex-wrap">
               <button
                 onClick={() => setIsEditing(true)}
                 className="inline-flex items-center gap-1.5 text-sm uppercase tracking-wider text-[#249E94]/80 hover:text-[#249E94] border border-transparent hover:border-[#249E94]/30 hover:bg-[#249E94]/5 px-3 py-1.5 transition-all font-bold"
@@ -81,6 +84,7 @@ export default function CommentActions({ comment, isOwner }) {
 
               <Button
                 onClick={handleUpdate}
+                isLoading={loading}
                 className="h-12 bg-[#249E94] text-black font-black text-xs uppercase tracking-wider px-5 hover:bg-[#0C7779] hover:text-white transition-all flex items-center gap-2 rounded-none"
               >
                 <Check className="w-4 h-4" />
