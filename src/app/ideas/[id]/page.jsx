@@ -11,12 +11,12 @@ import {
   User,
   Layers,
   ShieldCheck,
-  ExternalLink,
   ThumbsUp,
   MessageSquare,
   Lightbulb,
 } from "lucide-react";
 import { Button } from "@heroui/react";
+import CommentSection from "@/components/CommentSection";
 
 const IdeaDetailsPage = async ({ params }) => {
   const { id } = await params;
@@ -61,10 +61,10 @@ const IdeaDetailsPage = async ({ params }) => {
       </div>
 
       {/* MAIN GRID */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 ">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* LEFT SIDE */}
         <div className="lg:col-span-8">
-          <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg)] overflow-hidden h-full">
+          <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg)] overflow-hidden">
             {/* IMAGE */}
             <div className="relative h-80 w-full border-b border-[var(--card-border)]">
               {idea.imageUrl ? (
@@ -128,7 +128,7 @@ const IdeaDetailsPage = async ({ params }) => {
 
         {/* RIGHT SIDE */}
         <div className="lg:col-span-4 flex flex-col gap-6">
-          <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-6 space-y-6 h-full">
+          <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-6 space-y-6 flex-1">
             <h2 className="text-xl font-bold uppercase border-b border-[var(--card-border)] pb-3 font-mono">
               Metadata
             </h2>
@@ -159,7 +159,7 @@ const IdeaDetailsPage = async ({ params }) => {
                 Detailed Description
               </h3>
 
-              <p className="text-justify leading-relaxed text-[var(--card-text)] bg-[var(--card-bg)] p-4 border border-[var(--card-border)] whitespace-pre-wrap">
+              <p className="text-justify leading-relaxed text-[var(--card-text)] bg-[var(--card-bg)] p-4 border border-[var(--card-border)] whitespace-pre-wrap text-sm md:text-base">
                 {idea.detailedDescription ||
                   "No detailed description available."}
               </p>
@@ -178,7 +178,7 @@ const IdeaDetailsPage = async ({ params }) => {
           <div className="font-mono border border-dashed border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-5 flex gap-3">
             <Terminal className="w-5 h-5 text-[#249E94] shrink-0 mt-1" />
 
-            <p className="text-base leading-relaxed text-[var(--card-text-muted)]">
+            <p className="text-sm md:text-base leading-relaxed text-[var(--card-text-muted)]">
               Collaboration requests will directly contact the original creator
               of this idea.
             </p>
@@ -189,26 +189,26 @@ const IdeaDetailsPage = async ({ params }) => {
       {/* PROBLEM & SOLUTION */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
         {idea.problemStatement && (
-          <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-6">
+          <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-6 group hover:border-red-500/30 transition-all duration-300">
             <h2 className="text-xl font-bold uppercase text-red-500 mb-4 flex items-center gap-2 font-mono">
               <Layers className="w-5 h-5" />
               Problem
             </h2>
 
-            <p className="text-lg leading-relaxed text-[var(--card-text)]">
+            <p className="text-sm md:text-base leading-relaxed text-[var(--card-text)]">
               {idea.problemStatement}
             </p>
           </div>
         )}
 
         {idea.proposedSolution && (
-          <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-6">
+          <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-6 group hover:border-[#249E94]/30 transition-all duration-300">
             <h2 className="text-xl font-bold uppercase text-[#249E94] mb-4 flex items-center gap-2 font-mono">
               <Lightbulb className="w-5 h-5" />
               Solution
             </h2>
 
-            <p className="text-lg leading-relaxed text-[var(--card-text)]">
+            <p className="text-sm md:text-base leading-relaxed text-[var(--card-text)]">
               {idea.proposedSolution}
             </p>
           </div>
@@ -217,17 +217,21 @@ const IdeaDetailsPage = async ({ params }) => {
 
       {/* TARGET AUDIENCE */}
       {idea.targetAudience && (
-        <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-6 mt-6">
+        <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-6 mt-6 group hover:border-[#0C7779]/30 transition-all duration-300">
           <h2 className="text-xl font-bold uppercase text-[#0C7779] mb-4 flex items-center gap-2 font-mono">
             <User className="w-5 h-5" />
             Target Audience
           </h2>
 
-          <p className="text-lg leading-relaxed text-[var(--card-text)]">
+          <p className="text-sm md:text-base leading-relaxed text-[var(--card-text)]">
             {idea.targetAudience}
           </p>
         </div>
       )}
+
+      <div className="w-full">
+        <CommentSection idea={idea} />
+      </div>
     </section>
   );
 };
