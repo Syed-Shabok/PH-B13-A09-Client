@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 💡 Idea Vault
 
-## Getting Started
+A full-stack idea sharing platform where users can create, explore, and discuss startup ideas.  
+Built with **MERN Stack + Authentication + MongoDB + Next.js frontend + Express backend**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🔗 Live Links
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<p>
+  <a href="https://idea-vault-client-pink.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/🌐 Live%20Client-Visit%20App-249E94?style=for-the-badge" />
+  </a>
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+  <a href="http://idea-vault-server-lovat.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/⚡ Live%20Server-API-0C7779?style=for-the-badge" />
+  </a>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+  <a href="https://github.com/Syed-Shabok/PH-B13-A09-Server" target="_blank">
+    <img src="https://img.shields.io/badge/📦 Server%20Repo-GitHub-000?style=for-the-badge&logo=github" />
+  </a>
+</p>
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 🧠 Create and publish startup ideas
+- 🔍 Browse and search ideas
+- 🔥 Trending ideas based on upvotes, comments & recency
+- 💬 Comment system on ideas
+- 👍 Upvote system (engagement tracking)
+- 👤 User-based idea management
+- 🔐 Secure authentication using JWT
+- ⚡ REST API backend with Express & MongoDB
+- 🌐 Fully deployed (Frontend + Backend)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🏗️ Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Frontend
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js (App Router)
+- React
+- Tailwind CSS
+- HeroUI
+- React Hot Toast
+
+### Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- JWT Authentication (JOSE / JWKS)
+- CORS & Secure Middleware
+
+### Deployment
+
+- Vercel (Frontend + Backend)
+
+---
+
+## 🔐 Authentication
+
+- JWT-based authentication
+- Token verification using middleware (`verifyToken`)
+- Protected routes:
+  - Create idea
+  - Add comment
+  - Update/Delete comment
+  - Idea details (protected access)
+
+---
