@@ -81,20 +81,33 @@ export default function CreateIdeaFormClient() {
       shortDescription: formData.get("shortDescription"),
       detailedDescription: formData.get("detailedDescription"),
       imageUrl: formData.get("imageUrl"),
-      estimatedBudget: `$${Number(formData.get("estimatedBudget")).toLocaleString("en-US")}`,
+
+      // optional
+      estimatedBudget: formData.get("estimatedBudget")
+        ? `$${Number(formData.get("estimatedBudget")).toLocaleString("en-US")}`
+        : "",
+
       targetAudience: formData.get("targetAudience"),
       problemStatement: formData.get("problemStatement"),
       proposedSolution: formData.get("proposedSolution"),
       status: formData.get("status"),
-      tags: formData
-        .get("tags")
-        .split(",")
-        .map((tag) => tag.trim()),
+
+      //oprtional
+      tags: formData.get("tags")
+        ? formData
+            .get("tags")
+            .split(",")
+            .map((tag) => tag.trim())
+            .filter(Boolean)
+        : [],
+
       createdAt: new Date(),
+
       author: {
         name: user?.name,
         authorEmail: user?.email,
       },
+
       upvotes: 0,
       comments: 0,
     };
@@ -258,7 +271,6 @@ export default function CreateIdeaFormClient() {
                     </InputGroup.Prefix>
                     <Input
                       name="estimatedBudget"
-                      required
                       type="number"
                       placeholder="e.g. 50000"
                       className={inputClass}
@@ -275,7 +287,6 @@ export default function CreateIdeaFormClient() {
                     </InputGroup.Prefix>
                     <Input
                       name="tags"
-                      required
                       placeholder="AI, SaaS, Startup (comma separated)"
                       className={inputClass}
                     />
