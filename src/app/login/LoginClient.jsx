@@ -12,11 +12,15 @@ import {
   Separator,
   TextField,
 } from "@heroui/react";
-import { redirect } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 
 const LoginClient = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -27,11 +31,9 @@ const LoginClient = () => {
       password: user.password,
     });
 
-    console.log({ data, error });
-
     if (data) {
       toast.success("Logged in successfully");
-      redirect("/");
+      router.push(callbackUrl);
     }
 
     if (error) {
@@ -42,6 +44,7 @@ const LoginClient = () => {
   const handleGoogleSignin = async () => {
     await authClient.signIn.social({
       provider: "google",
+      callbackURL: callbackUrl,
     });
   };
 

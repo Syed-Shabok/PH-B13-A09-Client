@@ -90,7 +90,7 @@ export default function CreateIdeaFormClient() {
         .get("tags")
         .split(",")
         .map((tag) => tag.trim()),
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(),
       author: {
         name: user?.name,
         authorEmail: user?.email,
