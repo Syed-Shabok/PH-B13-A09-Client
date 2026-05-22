@@ -14,11 +14,14 @@ export const fetchTrendingIdeas = async () => {
   }
 };
 
-export const fetchAllIdeas = async () => {
+export const fetchAllIdeas = async (searchTerm = "") => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas`, {
-      cache: "no-store",
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas?search=${searchTerm}`,
+      {
+        cache: "no-store",
+      },
+    );
     if (!res.ok) {
       throw new Error("Failed to fetch ideas");
     }

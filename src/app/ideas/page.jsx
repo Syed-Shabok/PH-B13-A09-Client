@@ -1,4 +1,5 @@
 import IdeaCard from "@/components/IdeaCard";
+import SearchBar from "@/components/SearchBar";
 import { fetchAllIdeas } from "@/lib/ideas/data";
 import { Lightbulb, Database, Layers } from "lucide-react";
 import Link from "next/link";
@@ -7,20 +8,24 @@ export const metadata = {
   title: "Ideas | IdeaVault",
 };
 
-const IdeasPage = async () => {
-  const ideas = await fetchAllIdeas();
+const IdeasPage = async ({ searchParams }) => {
+  const sParams = await searchParams;
+
+  const ideas = await fetchAllIdeas(sParams?.search || "");
 
   return (
     <section className="container mx-auto py-12 px-5 xl:px-0 font-mono">
       {/* PIPELINE HEADER BLOCK */}
-      <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-6 md:p-8 mb-10 relative overflow-hidden">
-        <div className="absolute top-0 right-0 bg-[#249E94] text-black font-black px-3 py-1 text-[10px] tracking-wider uppercase">
+      <div className="border-2 border-[var(--card-border)] bg-[var(--card-bg-subtle)] p-6 md:p-8 mb-10 relative overflow-hidden flex flex-col gap-6 md:gap-8">
+        {/* TOP OVERLAY INDICATOR */}
+        <div className="absolute top-0 right-0 bg-[#249E94] text-black font-black px-3 py-1 text-[10px] tracking-wider uppercase font-mono">
           Index_Active
         </div>
 
+        {/* TOP ROW: BRANDING AND METRICS */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <h1 className="text-3xl font-black tracking-tight uppercase flex items-center gap-2 text-[var(--card-text)]">
+            <h1 className="text-3xl font-black tracking-tight uppercase flex items-center gap-2 text-[var(--card-text)] font-mono">
               <Layers className="w-7 h-7 text-[#249E94]" />
               Idea Vault Pipeline
             </h1>
@@ -31,7 +36,7 @@ const IdeasPage = async () => {
           </div>
 
           {/* SYSTEM STATS METRIC BAR */}
-          <div className="flex gap-4 border border-[var(--card-border)] bg-[var(--card-bg)] p-4 text-xs min-w-[200px]">
+          <div className="flex gap-4 border border-[var(--card-border)] bg-[var(--card-bg)] p-4 text-xs min-w-[200px] font-mono">
             <div className="space-y-1 w-full">
               <div className="text-[10px] text-[var(--card-text-muted)] uppercase tracking-wider">
                 // Global Records
@@ -46,6 +51,14 @@ const IdeasPage = async () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* BREAKING ROW LINE */}
+        <div className="h-[1px] w-full bg-[var(--card-border)] border-none" />
+
+        {/* BOTTOM ROW: INTEGRATED SEARCH BAR PIPELINE */}
+        <div className="w-full max-w-3xl">
+          <SearchBar />
         </div>
       </div>
 
