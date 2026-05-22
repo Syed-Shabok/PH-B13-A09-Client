@@ -1,3 +1,4 @@
+import CategoryFilter from "@/components/CategoryFilter";
 import IdeaCard from "@/components/IdeaCard";
 import SearchBar from "@/components/SearchBar";
 import { fetchAllIdeas } from "@/lib/ideas/data";
@@ -11,7 +12,10 @@ export const metadata = {
 const IdeasPage = async ({ searchParams }) => {
   const sParams = await searchParams;
 
-  const ideas = await fetchAllIdeas(sParams?.search || "");
+  const ideas = await fetchAllIdeas(
+    sParams?.search || "",
+    sParams?.category || "",
+  );
 
   return (
     <section className="container mx-auto py-12 px-5 xl:px-0 font-mono">
@@ -57,8 +61,11 @@ const IdeasPage = async ({ searchParams }) => {
         <div className="h-[1px] w-full bg-[var(--card-border)] border-none" />
 
         {/* BOTTOM ROW: INTEGRATED SEARCH BAR PIPELINE */}
-        <div className="w-full max-w-3xl">
-          <SearchBar />
+        <div className="flex flex-col md:flex-row gap-4 w-full max-w-4xl">
+          <CategoryFilter />
+          <div className="flex-1">
+            <SearchBar />
+          </div>
         </div>
       </div>
 

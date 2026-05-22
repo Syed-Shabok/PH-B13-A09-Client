@@ -14,19 +14,30 @@ export const fetchTrendingIdeas = async () => {
   }
 };
 
-export const fetchAllIdeas = async (searchTerm = "") => {
+export const fetchAllIdeas = async (searchTerm = "", category = "") => {
   try {
+    const params = new URLSearchParams();
+
+    if (searchTerm) {
+      params.set("search", searchTerm);
+    }
+
+    if (category) {
+      params.set("category", category);
+    }
+
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas?search=${searchTerm}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas?${params.toString()}`,
       {
         cache: "no-store",
       },
     );
+
     if (!res.ok) {
       throw new Error("Failed to fetch ideas");
     }
-    const ideas = await res.json();
-    return ideas;
+
+    return await res.json();
   } catch (error) {
     console.error("Error fetching all ideas:", error);
     throw error;
