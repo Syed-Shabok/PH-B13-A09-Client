@@ -132,7 +132,7 @@ const Navbar = () => {
                     >
                       <div className="flex flex-col py-1">
                         <p className="text-xs text-gray-400">Signed in as</p>
-                        <p className="font-bold text-[#005461] dark:text-[#3BC1A8] text-sm">
+                        <p className="font-bold text-[#005461] dark:text-[#3BC1A8] text-xs md:text-sm">
                           {user?.email}
                         </p>
                       </div>
