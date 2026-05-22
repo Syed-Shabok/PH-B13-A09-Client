@@ -1,3 +1,24 @@
+"use server";
+
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
+
+export const createIdeaAction = async (ideaData) => {
+  const { token } = await auth.api.getToken({ headers: await headers() });
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(ideaData),
+  });
+
+  if (!res.ok) throw new Error("Failed to create idea");
+  return await res.json();
+};
+
 export const fetchTrendingIdeas = async () => {
   try {
     const res = await fetch(
@@ -85,17 +106,27 @@ export const fetchIdeasByUser = async (email) => {
 };
 
 export const deleteIdea = async (id) => {
+  const { token } = await auth.api.getToken({ headers: await headers() });
+
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${id}`, {
     method: "DELETE",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
   });
   if (!res.ok) throw new Error("Failed to delete idea");
   return await res.json();
 };
 
 export const updateIdea = async (id, updatedData) => {
+  const { token } = await auth.api.getToken({ headers: await headers() });
+
   const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/${id}`, {
     method: "PATCH",
-    headers: { "content-type": "application/json" },
+    headers: {
+      "content-type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(updatedData),
   });
   if (!res.ok) throw new Error("Failed to update idea");

@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import { createIdeaAction } from "@/lib/ideas/data";
 import {
   Button,
   TextField,
@@ -113,13 +114,7 @@ export default function CreateIdeaFormClient() {
     };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas`, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(newIdea),
-      });
-
-      const data = await res.json();
+      const data = await createIdeaAction(newIdea);
 
       if (data?.insertedId || data?._id) {
         toast.success("Idea Created Successfully");
