@@ -1,13 +1,17 @@
 export const fetchTrendingIdeas = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/ideas`, {
-      cache: "no-store",
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/ideas/trending`,
+      {
+        cache: "no-store",
+      },
+    );
+
     if (!res.ok) {
-      throw new Error("Failed to fetch ideas");
+      throw new Error("Failed to fetch trending ideas");
     }
-    const ideas = await res.json();
-    return ideas.slice(0, 6);
+
+    return await res.json();
   } catch (error) {
     console.error("Error fetching trending ideas:", error);
     throw error;
